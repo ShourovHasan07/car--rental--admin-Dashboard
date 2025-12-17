@@ -53,7 +53,17 @@ export default async function Ecommerce() {
 
   //  Props 
   return (
-    <div className="h-full w-full space-y-6">
+   <div className="h-full w-full space-y-6">
+  {/* Page Header */}
+  <div className="mb-6">
+    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+      Admin Dashboard
+    </h2>
+    <p className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+      Monitor overall platform performance including   total cars, bookings, <br/> revenue, and recent activities
+    </p>
+  </div>
+
   {/* Metrics */}
   <div className="col-span-12 space-y-6 xl:col-span-7">
     <EcommerceMetrics data={data} />
@@ -61,17 +71,16 @@ export default async function Ecommerce() {
 
   {/* Recent Orders + Monthly Revenue */}
   <div className="flex flex-col lg:flex-row gap-6 mt-6">
-    {/* Recent Orders Table */}
     <div className="flex-1">
       <RecentOrders data={data} />
     </div>
 
-    {/* Monthly Revenue Card */}
     <div className="w-full lg:w-1/3">
       <MonthlyRevenue monthlyRevenue={data.monthlyRevenue} />
     </div>
   </div>
 </div>
+
 
   );
 }
