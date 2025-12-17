@@ -19,7 +19,7 @@ interface EcommerceMetricsProps {
 
 export const EcommerceMetrics = ({ data }: EcommerceMetricsProps) => {
   return (
-    <div className="grid grid-rows-1 gap-4 sm:grid-cols-2 md:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       
      
 

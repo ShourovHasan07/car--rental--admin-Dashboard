@@ -5,7 +5,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
-import MonthlyTarget from "@/components/ecommerce/MonthlyTarget";
+import MonthlyRevenue from "@/components/ecommerce/MonthlyRevenue";
 import MonthlySalesChart from "@/components/ecommerce/MonthlySalesChart";
 import StatisticsChart from "@/components/ecommerce/StatisticsChart";
 import RecentOrders from "@/components/ecommerce/RecentOrders";
@@ -20,14 +20,14 @@ export default async function Ecommerce() {
   //  Get session
   const session = await getServerSession(authOptions);
 
-  // 2️⃣ Session না থাকলে login page এ পাঠাও
+  //  Session  login page 
   if (!session || !session.accessToken) {
     redirect("/signin");
   }
 
   const token = session.accessToken;
 
-  // 3️⃣ Secure API call
+  //  Secure API call
   const res = await fetch("http://localhost:3000/dashboard", {
     method: "GET",
     headers: {
@@ -49,38 +49,29 @@ export default async function Ecommerce() {
 
   const data = await res.json();
 
-  console.log("dashbord res ", data)
+ // console.log("dashbord res ", data)
 
   //  Props 
   return (
-    <div className="h-full w-full">
-      <div className="col-span-12 space-y-6 xl:col-span-7">
-        <EcommerceMetrics  data={data} />
-        
-      </div>
+    <div className="h-full w-full space-y-6">
+  {/* Metrics */}
+  <div className="col-span-12 space-y-6 xl:col-span-7">
+    <EcommerceMetrics data={data} />
+  </div>
 
-
-
-
-     
-
-
-
-      {/* <div className="col-span-12 xl:col-span-5">
-        <MonthlyTarget data={data} />
-      </div> */}
-
-      <div className="col-span-12">
-        <StatisticsChart data={data.statistics} />
-      </div>
-
-      <div className="col-span-12 xl:col-span-5">
-        <DemographicCard data={data.demographics} />
-      </div>
-
-      <div className="col-span-12 xl:col-span-7">
-        <RecentOrders data={data.recentOrders} />
-      </div>
+  {/* Recent Orders + Monthly Revenue */}
+  <div className="flex flex-col lg:flex-row gap-6 mt-6">
+    {/* Recent Orders Table */}
+    <div className="flex-1">
+      <RecentOrders data={data} />
     </div>
+
+    {/* Monthly Revenue Card */}
+    <div className="w-full lg:w-1/3">
+      <MonthlyRevenue monthlyRevenue={data.monthlyRevenue} />
+    </div>
+  </div>
+</div>
+
   );
 }
